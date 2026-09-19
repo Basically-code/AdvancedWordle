@@ -1,30 +1,26 @@
 
 import java.io.FileWriter;
-import java.util.Scanner;
-import java.io.File;
 import java.util.Random;
 import java.io.IOException;
 
 public class data {
-
-    private String levelFile;
     private String[][] miniDict;
 
     methods method = new methods();
 
     public void preLoader(){
-        this.miniDict = method.alphabetical("data/miniWords.txt");
+        this.miniDict = method.alphabetical("database/miniWords.txt");
     }
 
     private void usedWord(String word){
-        try (FileWriter writer = new FileWriter("data/used.txt",true)){
+        try (FileWriter writer = new FileWriter("database/used.txt",true)){
             writer.write(word);
             writer.write(System.lineSeparator());
-        }catch(IOException e) {e.printStackTrace();}
+        }catch(IOException e) {System.err.println("Unwritable file");}
     }
 
     private boolean checkUse(String word){
-        String[] uw = method.readFile("data/used.txt").split(",");
+        String[] uw = method.readFile("database/used.txt").split(",");
         for(String u: uw){
             if (word.equals(u)) return true;
         }usedWord(word);
@@ -33,12 +29,10 @@ public class data {
 
     public String wordSelector(int level){
         int div = level / 4; //This determines how many words till the next tier
-        String[] files = {"data/tier1.txt","data/tier2.txt","data/tier3.txt","data/tier4.txt"};
-        this.levelFile = files[div];
+        String[] files = {"tier1.txt","tier2.txt","tier3.txt","tier4.txt"};
 
-        String[] lf = method.readFile(this.levelFile).split(",");
+        String[] lf = method.readFile("database/" + files[div]).split(",");
         Random random = new Random();
-        String word;
         while(true){
             int rand = random.nextInt(lf.length);
             if (!checkUse(lf[rand])) {

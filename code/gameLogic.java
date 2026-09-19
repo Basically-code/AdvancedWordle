@@ -2,9 +2,10 @@
 //Importing all necessary libraries
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class gameLogic{
 
@@ -31,30 +32,39 @@ public class gameLogic{
         return true;
     }//Checks word length and existance
 
+    private boolean contains(char[] cs, char v){
+        for (char c: cs) {
+            if (c == v) return true;
+        }return false;
+    }
+
     private void displayResult(String word,String guess){
         int len = guess.length();
         char[] display   = new char[len];
-        boolean[]  used  = new boolean[len];
         char[] wordChar  = word.toUpperCase().toCharArray();
         char[] guessChar = guess.toUpperCase().toCharArray();
 
-        for (int j = 0; j < len; j++) {
-            if (wordChar[j] == guessChar[j]) {
-                display[j] = 'G';
-                used[j] = true;
-            } else {
-                for (int m = 0; m < len; m++) {
-                    if (!used[m] && (guessChar[m] == wordChar[j])) {
-                        display[j] = 'Y';
-                        used[j] = true;
-                        break;
-                    }
+        boolean[] wordUsed = new boolean[len];
+        for (int i = 0; i < len; i++){
+            display[i] = 'X';
+            if (wordChar[i] == guessChar[i]) {
+                display[i] = 'G';
+                wordUsed[i] = true;
+            }
+        }
+
+        for (int i = 0; i < len; i++) {
+            if (display[i] == 'G') {
+                continue;
+            }
+            for (int j = 0; j < len; j++) {
+                if (!wordUsed[j] && guessChar[i] == wordChar[j]) {
+                    display[i] = 'Y';
+                    wordUsed[j] = true;
+                    break;
                 }
             }
-        }//Checks for words present in the guess
-        for (int k = 0; k < len; k++){
-            if(!used[k]) display[k] = 'X';
-        }//Patches remaining words as 'X'
+        }
 
         // Display guessed letters
         System.out.println();
@@ -69,6 +79,11 @@ public class gameLogic{
         }
         System.out.println();
         System.out.println("G = Correct position | " + "Y = Wrong position | " + "X = Not in word");
+    }
+
+
+    private void displayResult2(String word,String guess){
+        displayResult(word, guess);
     }
 
     private void gameLoop() {// 4 tiers so sample in 16 rounds
@@ -94,14 +109,14 @@ public class gameLogic{
 
                 if (wordValidator(guess, choosenWord.length())) {
                     displayResult(choosenWord, guess);
-                    Attempts--;
                     if (choosenWord.equals(guess)) {
-                        correct = true;
-                        break;//Guessed correctly
+                        playerLevel++; //Player Advances to next Level
+                        break;         //Guessed correctly
                     }
+                    Attempts--;        //Player missed the word
                 }
             }
-            if (correct) playerLevel++;
+            if (Attempts == 0) break; // You lost
         }
 
         if (playerLevel == 16) {
@@ -123,7 +138,6 @@ public class gameLogic{
                     System.out.println("Please choose either 'c' or 'q'");
                 }
             }
-
         } else {
             System.out.println("GAME OVER!!!");}
     }
