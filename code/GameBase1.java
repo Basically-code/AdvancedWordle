@@ -95,7 +95,6 @@ public class GameBase1{
         int playerLevel = 0; 
         boolean cont = true;
         int Attempts = 6;
-        boolean s = true;
         while (playerLevel < 16 && cont) {
             String choosenWord = randomWord(playerLevel);
             System.out.println(choosenWord); //For testing
