@@ -2,14 +2,33 @@
 import java.io.FileWriter;
 import java.util.Random;
 import java.io.IOException;
+import java.io.File;
 
 public class data {
     private String[][] miniDict;
 
     methods method = new methods();
 
-    public void preLoader(){
+    public data(){
         this.miniDict = method.alphabetical("database/miniWords.txt");
+        initiate();
+    }
+
+    private void initiate(){
+        File used = new File("database/used.txt");
+         try {
+            if (!used.createNewFile()) {
+                System.out.println("Error");
+            }
+        } catch (IOException e) {
+            System.err.println("An error occurred: " + e.getMessage());
+        }
+    }
+    public void terminate(){
+        File used = new File("database/used.txt");
+        if(!used.delete()){
+            System.out.println("Something went wrong");
+        }
     }
 
     private void usedWord(String word){

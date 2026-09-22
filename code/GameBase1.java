@@ -1,18 +1,20 @@
-//Core Game Logic
-//Importing all necessary libraries
-import java.io.File;
-import java.io.FileNotFoundException;
-//import java.util.ArrayList;
-import java.util.Random;
+//Core Terminal Game Logic Implementation
+/*
+    The following code impliments a 16 level terminal version of wordle
+    On start the game loads up the data in a reusable matrix 
+    Once started the user is provided with a definite amount of attempts
+    As the user guesses the code relays the output to guide on guessing 
+    If the player uses up all their attemps its game over
+    If they guess right they proceed to the next level
+*/
 import java.util.Scanner;
-import java.util.Arrays;
 
-public class gameLogic{
+public class GameBase1{
 
-    methods method = new methods();//Imports needed methods
+    //methods method = new methods();
     data wordData  = new data();
 
-    private String randomWord(int level){
+    public String randomWord(int level){
         String randomWord = wordData.wordSelector(level);
         if (randomWord == null) {
             System.out.println("Could not load a word.");
@@ -20,25 +22,30 @@ public class gameLogic{
         }return randomWord;
     }
 
-    private boolean wordValidator(String guess,int reqLen){
+    public boolean wordValidator(String guess,int reqLen){
+        //If the word is not doesn't exist
+        if (guess == null) {
+            System.out.println("Sorry but nothing was typed");
+            return false;
+        }//Checks if a word was written
+        for (char c : guess.toCharArray()) {
+            if (!Character.isLetter(c)) {
+                System.out.println("A non letter was included in the word");
+                return false;
+            }
+        }//Checks for non letter characters
         if (guess.length() != reqLen) {
             System.out.println("Your guess must have exactly "+ reqLen+" letters.");
             return false;
-        }
+        }//Checks if the word is of required length
         if (!wordData.wordValidator(guess)) {
             System.out.println("'" + guess.toUpperCase() + "' is not a valid word.");
             return false;
-        }
+        }//Checks for word existance
         return true;
-    }//Checks word length and existance
+    }//Checks the word
 
-    private boolean contains(char[] cs, char v){
-        for (char c: cs) {
-            if (c == v) return true;
-        }return false;
-    }
-
-    private void displayResult(String word,String guess){
+    public char[] displayResult(String word,String guess){
         int len = guess.length();
         char[] display   = new char[len];
         char[] wordChar  = word.toUpperCase().toCharArray();
@@ -66,37 +73,33 @@ public class gameLogic{
             }
         }
 
-        // Display guessed letters
-        System.out.println();
+        //Display guessed letters
+       System.out.println();
 
-        for (int i = 0; i < len; i++) {
-            System.out.print(guess.toUpperCase().charAt(i) + " ");
-        }
-        System.out.println();
-        // Display result
-        for (int i = 0; i < len; i++) {
-            System.out.print(display[i] + " ");
-        }
-        System.out.println();
-        System.out.println("G = Correct position | " + "Y = Wrong position | " + "X = Not in word");
+       for (int i = 0; i < len; i++) {
+           System.out.print(guess.toUpperCase().charAt(i) + " ");
+       }
+       System.out.println();
+       // Display result
+       for (int i = 0; i < len; i++) {
+           System.out.print(display[i] + " ");
+       }
+       System.out.println();
+       System.out.println("G = Correct position | " + "Y = Wrong position | " + "X = Not in word");
+
+        return display;
     }
 
-
-    private void displayResult2(String word,String guess){
-        displayResult(word, guess);
-    }
 
     private void gameLoop() {// 4 tiers so sample in 16 rounds
-        int playerLevel = 0;//Should be dynamic
+        int playerLevel = 0; 
         boolean cont = true;
-
+        int Attempts = 6;
+        boolean s = true;
         while (playerLevel < 16 && cont) {
             String choosenWord = randomWord(playerLevel);
             System.out.println(choosenWord); //For testing
-            boolean correct = false;
-            int Attempts = 6;
             Scanner in = new Scanner(System.in);
-
             while (Attempts > 0) {
                 System.out.printf("|Level: %d| |Attempts: %d| (Enter a %d letter word): ",
                         playerLevel + 1, Attempts, choosenWord.length());
@@ -116,6 +119,15 @@ public class gameLogic{
                     Attempts--;        //Player missed the word
                 }
             }
+            
+            if(playerLevel == 2 || playerLevel == 6 || playerLevel == 10 || playerLevel == 14){
+                Attempts = 5;
+            }
+            if(playerLevel == 4 || playerLevel == 8 || playerLevel == 12){
+                Attempts = 6;
+            }//Alternates the player attempts for difficulty
+
+
             if (Attempts == 0) break; // You lost
         }
 
@@ -129,10 +141,13 @@ public class gameLogic{
             while (true) {
                 String request = end.nextLine();
                 if (request.equals("c")) {
+                    System.out.println("Come-on Lets GO again!!!!");
                     playerLevel = 1;
                     break;
                 } else if (request.equals("q")) {
+                    System.out.println("Thank you for playing see you again next time");
                     cont = false;
+                    wordData.terminate();
                     break;
                 } else {
                     System.out.println("Please choose either 'c' or 'q'");
@@ -142,17 +157,7 @@ public class gameLogic{
             System.out.println("GAME OVER!!!");}
     }
 
-    public void runGame(){
-        wordData.preLoader();
-        System.out.println("""
-                Hello There welcome to the Advanced Wordle Game
-                As you start the game you must guess the secret word
-                under limited trials
-                type 'quit' at anypoint to stop the game
-                GOOD LUCK AND HAVE FUN
-                """);
+    public void RUNGAME_1(){
         gameLoop();
     }
-
-
 }
