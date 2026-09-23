@@ -14,6 +14,7 @@ public class GameBase1{
     //methods method = new methods();
     data wordData  = new data();
 
+    //Vuyani Mabuza - @26M1595
     public String randomWord(int level){
         String randomWord = wordData.wordSelector(level);
         if (randomWord == null) {
@@ -22,6 +23,7 @@ public class GameBase1{
         }return randomWord;
     }
 
+    //Vuyani Mabuza - @26M1595
     public boolean wordValidator(String guess,int reqLen){
         //If the word is not doesn't exist
         if (guess == null) {
@@ -45,6 +47,7 @@ public class GameBase1{
         return true;
     }//Checks the word
 
+    //Vuyani Mabuza - @26M1595
     public char[] displayResult(String word,String guess){
         int len = guess.length();
         char[] display   = new char[len];
@@ -90,7 +93,7 @@ public class GameBase1{
         return display;
     }
 
-
+    //Rhulani Tshabalala - @Pruchuuu
     private void gameLoop() {// 4 tiers so sample in 16 rounds
         int playerLevel = 0; 
         boolean cont = true;
