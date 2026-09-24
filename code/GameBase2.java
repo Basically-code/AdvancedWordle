@@ -29,7 +29,7 @@ public class GameBase2 {
     private JLabel[][] grid;
     private String selectWord;
     private String guessBuild = "";
-    private int playerLevel = 14; //Testting
+    private int playerLevel = 0;
     private boolean correct = false;
 
 
@@ -298,7 +298,7 @@ public class GameBase2 {
     // Rhulani Tshabalala - @Pruchuuu
     public void StartGame(){
 
-        if(playerLevel <= wordData.tierDifferentiator * 4){
+        if(this.playerLevel <= wordData.tierDifferentiator * 4){
             randomWord(this.playerLevel);
             System.out.println(this.selectWord); //For testing
             this.correct = false;
@@ -306,8 +306,17 @@ public class GameBase2 {
             this.currentRow = 0;
             this.currentCol = 0;
             this.guessBuild = "";
-            this.grid = new JLabel[this.row][this.col];
 
+            final int switchPoint = wordData.tierDifferentiator / 2;
+            //Switches when it gets divided into two identical parts
+            if (this.playerLevel % wordData.tierDifferentiator == switchPoint) {
+                this.row = 5;
+            } 
+            else if (this.playerLevel % wordData.tierDifferentiator == 0 && this.playerLevel > 0) {
+                this.row = 6;
+            }
+
+            this.grid = new JLabel[this.row][this.col];
             gridSetUp();
         }else{
             System.out.println("GAME OVER!!");

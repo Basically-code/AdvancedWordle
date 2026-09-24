@@ -8,13 +8,11 @@ import java.io.File;
 import java.util.Scanner;
 
 public class data {
-    //private String[][] miniDict;
     private String[] set;
     private Set<String> wordSet;
 
     //Vuyani Mabuza - @26M1595
     public data(){
-        //this.miniDict = method.alphabetical("database/miniWords.txt");
         this.set = readFile("database/miniWords.txt").split(",");
         initiate();
         createSet();
@@ -72,6 +70,7 @@ public class data {
     /*
         This determines how many words till the next tier
         maxPlayerLevels = tierDifferentiator * Number of files;
+        Note: tierDifferentiator should be even
     */
     //Mavona Khosa - @g26k8412
     public String wordSelector(int level){

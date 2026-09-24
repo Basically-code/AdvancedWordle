@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class GameBase1{
 
-    //methods method = new methods();
     data wordData  = new data();
+    private int tier = (wordData.tierDifferentiator * 4);
 
     //Vuyani Mabuza - @26M1595
     public String randomWord(int level){
@@ -98,7 +98,7 @@ public class GameBase1{
         int playerLevel = 0; 
         boolean cont = true;
         int Attempts = 6;
-        while (playerLevel < 16 && cont) {
+        while (playerLevel < this.tier && cont) {
             String choosenWord = randomWord(playerLevel);
             System.out.println(choosenWord); //For testing
             Scanner in = new Scanner(System.in);
@@ -122,18 +122,20 @@ public class GameBase1{
                 }
             }
             
-            if(playerLevel == 2 || playerLevel == 6 || playerLevel == 10 || playerLevel == 14){
+            final int switchPoint = wordData.tierDifferentiator / 2;
+            //Switches when it gets divided into two identical parts
+            if (playerLevel % wordData.tierDifferentiator == switchPoint) {
                 Attempts = 5;
-            }
-            if(playerLevel == 4 || playerLevel == 8 || playerLevel == 12){
+            } 
+            else if (playerLevel % wordData.tierDifferentiator == 0 && playerLevel > 0) {
                 Attempts = 6;
-            }//Alternates the player attempts for difficulty
+            }//For Alternations
 
 
             if (Attempts == 0) break; // You lost
         }
 
-        if (playerLevel == 16) {
+        if (playerLevel == this.tier) {
             System.out.println("WINNER, Congrats you have finished the challenge!!!");
             Scanner end = new Scanner(System.in);
             System.out.println("""
