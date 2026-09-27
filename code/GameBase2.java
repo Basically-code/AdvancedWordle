@@ -19,7 +19,7 @@ import javax.swing.Timer;
  * This code impliments A Java GUI Library called swing
  * Creating a life-like wordle game 
 */
-//Hans Kimaro - @g26k8977
+
 public class GameBase2 {
     //Private variables
     private int row = 6;
@@ -41,7 +41,7 @@ public class GameBase2 {
         this.selectWord = randomWord;
     }//Random Word Selector sets "selectWord"
 
-    //Rhulani Tshabalala - @Pruchuuu
+    
     private void gridSetUp() {
         JFrame frame = new JFrame("Advanced Wordle");
 
@@ -72,7 +72,7 @@ public class GameBase2 {
             for (int c = 0; c < this.col; c++) {
                 JLabel box = new JLabel("", SwingConstants.CENTER);
                 box.setPreferredSize(boxSize);
-                box.setMinimumSize(boxSize); // FIX: Ensures boxes don't shrink smaller than 50x50
+                box.setMinimumSize(boxSize); 
                 box.setFont(labelFont);
                 box.setBorder(boxBorder);
                 box.setForeground(Color.WHITE);
@@ -96,7 +96,7 @@ public class GameBase2 {
         return;
     }//Create the grid in one method
 
-    //Vuyani Mabuza - @26M1595
+    
     private char[] processDisplay(String guess){
         int len = guess.length();
         char[] display   = new char[len];
@@ -127,7 +127,7 @@ public class GameBase2 {
         return display;
     }
 
-    // Mbalenhle Mkhize - @g26m4513
+    
     private void displayGuessResults(String guess, int rowIndex) {
         
         char[] display = processDisplay(guess);
@@ -147,7 +147,7 @@ public class GameBase2 {
 
 
         //Handling Inputs
-        //Mbalenhle Mkhize - @g26m4513
+        
         private void handleLetterInput(char l, JFrame frame){
             if (this.correct || (this.currentRow >= this.row)) return;
             if(this.currentCol < col) {
@@ -157,7 +157,7 @@ public class GameBase2 {
             }
         }//Inputs the letters typed 
 
-        //Mbalenhle Mkhize - @g26m4513
+        
         private void handleBackspace(JFrame frame){
             if (this.correct || (this.currentRow >= this.row)) return;
             if(this.currentCol > 0){
@@ -167,7 +167,7 @@ public class GameBase2 {
             }
         }//Clears previous char
 
-        //Mbalenhle Mkhize - @g26m4513
+       
         private void handleEnter(JFrame frame){
             if (this.currentRow >= this.row && !this.correct) {
                 System.out.println("Game Over! The word was: " + this.selectWord);
@@ -210,7 +210,7 @@ public class GameBase2 {
             }
         }//Handles when the user preses enter
 
-        //Hans Kimaro - @g26k8977
+   
         private void setupKeyBindings(JPanel mainPanel,JFrame frame) {
         InputMap  im = mainPanel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = mainPanel.getActionMap();
@@ -256,7 +256,7 @@ public class GameBase2 {
         });
     }//Handles Input
 
-    //Mavona Khosa - @g26k8412
+  
     private void Restart(JFrame frame){ 
         int choice = JOptionPane.showConfirmDialog(
             frame,
@@ -276,7 +276,6 @@ public class GameBase2 {
         }
     }
 
-    //Vuyani Mabuza - @26M1595
     private void WinnerMessage(JFrame frame){
         int choice = JOptionPane.showConfirmDialog(
             frame,
@@ -295,7 +294,7 @@ public class GameBase2 {
             }
     }
 
-    // Rhulani Tshabalala - @Pruchuuu
+    
     public void StartGame(){
 
         if(this.playerLevel <= wordData.tierDifferentiator * 4){

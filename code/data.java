@@ -11,14 +11,14 @@ public class data {
     private String[] set;
     private Set<String> wordSet;
 
-    //Vuyani Mabuza - @26M1595
+    
     public data(){
         this.set = readFile("database/miniWords.txt").split(",");
         initiate();
         createSet();
     }
 
-    //Hans Kimaro - @g26k8977
+    
     public String readFile(String fileName){
         String output = "";
         try(Scanner read = new Scanner(new File(fileName))){
@@ -32,7 +32,7 @@ public class data {
         return output.toLowerCase();
     }
 
-    // Vuyani Mabuza - @26M1595
+    
     private void initiate(){
          try {
             File used = new File("database/used.txt");
@@ -41,7 +41,7 @@ public class data {
             System.err.println("An error occurred: " + e.getMessage());
         }
     }
-    // Vuyani Mabuza - @26M1595
+    
     public void terminate(){
         File used = new File("database/used.txt");
         if(!used.delete()){
@@ -49,7 +49,7 @@ public class data {
         }
     }
 
-    //Mbalenhle Mkhize - @g26m4513
+    
     private void usedWord(String word){
         try (FileWriter writer = new FileWriter("database/used.txt",true)){
             writer.write(word);
@@ -57,7 +57,7 @@ public class data {
         }catch(IOException e) {System.err.println("Unwritable file");}
     }
 
-    //Rhulani Tshabalala - @Pruchuuu
+    
     private boolean checkUse(String word){
         String[] uw = readFile("database/used.txt").split(",");
         for(String u: uw){
@@ -72,7 +72,7 @@ public class data {
         maxPlayerLevels = tierDifferentiator * Number of files;
         Note: tierDifferentiator should be even
     */
-    //Mavona Khosa - @g26k8412
+    
     public String wordSelector(int level){
         int div = level / tierDifferentiator;
         String[] files = {"tier1.txt","tier2.txt","tier3.txt","tier4.txt"};
@@ -87,14 +87,14 @@ public class data {
         }
     }
 
-    //Vuyani Mabuza - @26M1595
+    
     private void createSet(){
         Set<String> hash = new HashSet<>();
         for(String s: this.set) hash.add(s);
         this.wordSet = hash;
     }//Creates a set for easy finding of values
 
-    //Vuyani Mabuza - @26M1595
+    
     public boolean wordValidator(String word){
         return this.wordSet.contains(word);
     }//Validates if the word exists
